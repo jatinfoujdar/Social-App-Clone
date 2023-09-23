@@ -1,8 +1,11 @@
 import React from 'react'
+import UserHeader from '../component/UserHeader'
 
 const UserPage = () => {
   return (
-    <div>UserPage</div>
+    <>
+    <UserHeader/>
+    </>
   )
 }
 
