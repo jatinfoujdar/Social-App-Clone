@@ -1,15 +1,19 @@
 import { Avatar, Box, Flex, VStack,Text ,Menu, MenuButton, Portal, MenuList, MenuItem} from '@chakra-ui/react'
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useToast } from '@chakra-ui/react'
 import {BsInstagram } from "react-icons/bs"
 import { CiCircleMore} from "react-icons/ci"
 
 const UserHeader = () => {
+    const toast = useToast()
+
     const copyUrl =()=>{
         const currentURL = window.location.href;
         // console.log(window);
         navigator.clipboard.writeText(currentURL).then(()=>{
-            console.log("URL is copied");
+            // console.log("URL is copied");
+            toast({ description: 'Copied' })
         })
 
     }
