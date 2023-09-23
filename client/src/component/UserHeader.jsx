@@ -1,6 +1,8 @@
-import { Avatar, Box, Flex, VStack,Text } from '@chakra-ui/react'
+import { Avatar, Box, Flex, VStack,Text ,Menu, MenuButton, Portal, MenuList, MenuItem} from '@chakra-ui/react'
 import React from 'react'
 import { Link } from 'react-router-dom'
+import {BsInstagram } from "react-icons/bs"
+import { CiCircleMore} from "react-icons/ci"
 
 const UserHeader = () => {
   return (
@@ -14,7 +16,7 @@ const UserHeader = () => {
             </Flex>
             </Box>
             <Box>
-                <Avatar name='Jatin Foujdar' scr= "/zuck-avatar.png" size={"xl"} />
+                <Avatar name='Jatin Foujdar' scr= "/Zuck-avatar.png" size={"xl"} />
             </Box>
         </Flex>
         <Text>I'm a learner and always Ravenous for new Skills !</Text>
@@ -24,7 +26,23 @@ const UserHeader = () => {
                 <Box w={"1"} h={"1"} bg={"gray.light"} borderRadius={"full"}></Box>
                 <Link color={'gray.light'}>instagram.com</Link>
             </Flex>
-            <Flex gap={2} alignItems={"center"}></Flex>
+            <Flex gap={2} alignItems={"center"}>
+                <Box _hover={{ bg: "white", svg: { fill: "black" } }}>
+                    <BsInstagram size={24} cursor={"pointer"} />
+                </Box>
+                <Box _hover={{ bg: "white", svg: { fill: "black" } }}>
+                <Menu>
+                    <MenuButton>
+                <CiCircleMore size={24} cursor={"pointer"}  />
+                </MenuButton>
+                <Portal>
+                    <MenuList>
+                        <MenuItem>Copu Link</MenuItem>
+                    </MenuList>
+                </Portal>
+                </Menu>
+                </Box>
+            </Flex>
         </Flex>
     </VStack>
   )
