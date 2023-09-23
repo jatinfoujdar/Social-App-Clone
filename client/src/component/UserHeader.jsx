@@ -5,6 +5,14 @@ import {BsInstagram } from "react-icons/bs"
 import { CiCircleMore} from "react-icons/ci"
 
 const UserHeader = () => {
+    const copyUrl =()=>{
+        const currentURL = window.location.href;
+        // console.log(window);
+        navigator.clipboard.writeText(currentURL).then(()=>{
+            console.log("URL is copied");
+        })
+
+    }
   return (
     <VStack gap={4} alignItems={"start"}>
         <Flex justifyContent={"space-between"} w={"full"}>
@@ -37,7 +45,7 @@ const UserHeader = () => {
                 </MenuButton>
                 <Portal>
                     <MenuList>
-                        <MenuItem>Copu Link</MenuItem>
+                        <MenuItem onClick={copyUrl}>Copu Link</MenuItem>
                     </MenuList>
                 </Portal>
                 </Menu>
