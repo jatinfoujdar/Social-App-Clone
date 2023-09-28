@@ -28,7 +28,7 @@ const UserHeader = () => {
             </Flex>
             </Box>
             <Box>
-                <Avatar name='Jatin Foujdar' scr= "/Zuck-avatar.png" size={"xl"} />
+                <Avatar name='Jatin Foujdar' scr= "/zuck-avatar.png" size={"xl"} />
             </Box>
         </Flex>
         <Text>I'm a learner and always Ravenous for new Skills !</Text>
