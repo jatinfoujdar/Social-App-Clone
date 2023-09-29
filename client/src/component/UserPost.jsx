@@ -8,7 +8,7 @@ const UserPost = () => {
     <Link to={"/jatinfoujdar/post/1"}>
         <Flex gap={3} mb={4} py={5}>
            <Flex flexDirection={"column"} alignItems={"center"}>
-            <Avatar size={"md"} name='Jatin Foujdar' src='/zuck-avatar.png'/>
+            <Avatar size={"md"} name='Jatin Foujdar' src='/jf.jpg'/>
             <Box w="1px" h={"full"} bg= "gray.light" my={2}> </Box>
             <Box  position={"relative"} w={"full"}>
                 <Avatar size={"xs"} name='jatin foujdar' src='/zuck-avatar.png' position={"absolute"} top={"0px"}left={"15px"} padding={"2px"}/>
@@ -27,6 +27,11 @@ const UserPost = () => {
               <BsThreeDots/>
             </Flex>
            </Flex>
+           <Text fontSize={"sm"}>This is my first post</Text>
+           <Box borderRadius={6} overflow={"hidden"} border={"2px solid"} borderColor={"gray.light"}>
+            <Image src='/jf.jpg' w={"full"}/>
+
+           </Box>
            </Flex>
         </Flex>
     </Link>
