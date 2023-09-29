@@ -1,5 +1,6 @@
-import { Avatar, Box, Flex } from '@chakra-ui/react'
+import { Avatar, Box, Flex, Image, Text } from '@chakra-ui/react'
 import React from 'react'
+import { BsThreeDots } from 'react-icons/bs'
 import { Link } from 'react-router-dom'
 
 const UserPost = () => {
@@ -19,8 +20,12 @@ const UserPost = () => {
            <Flex justifyContent={"space-between"} w={"full"}>
             <Flex w={"full"} alignItems={"center"} >
                 <Text fontSize={"sm"} fontWeight={"bold"}> Jatin Foujdar</Text>
+                <Image src='/verified.png' w={4} h={4} ml={1}/>
             </Flex>
-            <Flex ></Flex>
+            <Flex gap={4} alignItems={"center"}>
+              <Text fontStyle={"sm"} color={"gray.light"}>1d</Text>
+              <BsThreeDots/>
+            </Flex>
            </Flex>
            </Flex>
         </Flex>
