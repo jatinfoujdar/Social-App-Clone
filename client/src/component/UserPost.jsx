@@ -1,9 +1,11 @@
 import { Avatar, Box, Flex, Image, Text } from '@chakra-ui/react'
-import React from 'react'
+import React, { useState } from 'react'
 import { BsThreeDots } from 'react-icons/bs'
 import { Link } from 'react-router-dom'
+import Reactions from './Reactions'
 
 const UserPost = () => {
+  const [liked,setLiked] = useState();
   return (
     <Link to={"/jatinfoujdar/post/1"}>
         <Flex gap={3} mb={4} py={5}>
@@ -30,10 +32,12 @@ const UserPost = () => {
            <Text fontSize={"sm"}>This is my first post</Text>
            <Box borderRadius={6} overflow={"hidden"} border={"2px solid"} borderColor={"gray.light"}>
             <Image src='/jf.jpg' w={"full"}/>
-
            </Box>
+           <Flex gap={3} my={1}>
+            <Reactions liked={liked} setLiked={setLiked}/>
            </Flex>
-        </Flex>
+           </Flex>
+          </Flex>
     </Link>
   )
 }
