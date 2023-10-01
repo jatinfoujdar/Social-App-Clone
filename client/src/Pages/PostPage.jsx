@@ -1,7 +1,8 @@
-import { Avatar, Flex, Image, Text, Box } from '@chakra-ui/react';
+import { Avatar, Flex, Image, Text, Box, Divider } from '@chakra-ui/react';
 import React, { useState } from 'react'
 import { BsThreeDots } from 'react-icons/bs';
 import Reactions from '../component/Reactions';
+import Comment from '../component/Comment';
 
 const PostPage = () => {
   const [liked, setLiked] = useState(false)
@@ -32,6 +33,8 @@ const PostPage = () => {
             <Box w={0.5} h={0.5} borderRadius={"full"} bg={"gray.light"}></Box>
             <Text color={"gray.light"} fontSize={"sm"}>{200 + (liked ? 1 : 0)} likes</Text>
            </Flex>
+           <Divider/>
+           <Comment/>
     </>
   )
 }
