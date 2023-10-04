@@ -1,4 +1,5 @@
 import User from "../schema/userSchema.js";
+import bcrypt from "bcryptjs";
 
 const signupUser = async(req,res)=>{
   
