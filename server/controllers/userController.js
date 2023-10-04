@@ -1,5 +1,6 @@
 import User from "../schema/userSchema.js";
 import bcrypt from "bcryptjs";
+import generateJWT from "../utils/generateJWT.js";
 
 const signupUser = async(req,res)=>{
   
@@ -24,7 +25,9 @@ const signupUser = async(req,res)=>{
         await newUser.save();
 
         if(newUser){
+            generateJWT(newUser._id,res);
             res.status(201).json({
+
                 id: newUser._id,
                 name: newUser.name,
                 email: newUser.email,
