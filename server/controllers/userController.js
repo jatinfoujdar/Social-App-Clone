@@ -79,3 +79,13 @@ export const logoutUser = async(req,res)=>{
     }
 }
 
+export const follower = async(req,res)=>{
+    try {
+        const {id} = req.params;
+        const userToModify = await User.findByID(id);
+        const currentUser =  await User.findByID(req.user._id);
+    } catch (error) {
+        res.status(500).json({message: error.message});
+        console.log("Error in follow Route", error.message);
+    }
+}
