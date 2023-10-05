@@ -79,13 +79,43 @@ export const logoutUser = async(req,res)=>{
     }
 }
 
-export const follower = async(req,res)=>{
+export const follower = async (req, res) => {
     try {
-        const {id} = req.params;
-        const userToModify = await User.findByID(id);
-        const currentUser =  await User.findByID(req.user._id);
+        // Check if req.user is defined and has an _id property
+        if (!req.user || !req.user._id) {
+            return res.status(401).json({ message: "Authentication required" });
+        }
+
+        const { id } = req.params;
+        const userToModify = await User.findById(id);
+        const currentUser = await User.findById(req.user._id);
+
+        // Check if the user is trying to follow/unfollow themselves
+        if (id === req.user._id.toString()) {
+            return res.status(400).json({ message: "You cannot follow/unfollow yourself" });
+        }
+
+        // Check if userToModify and currentUser exist
+        if (!userToModify || !currentUser) {
+            return res.status(400).json({ message: "User not found" });
+        }
+
+        const isFollowing = currentUser.following.includes(id);
+
+        if (isFollowing) {
+            // Unfollow user
+            await User.findByIdAndUpdate(id, { $pull: { followers: req.user._id } });
+            await User.findByIdAndUpdate(req.user._id, { $pull: { following: id } });
+            res.status(200).json({ message: "User unfollowed successfully" });
+        } else {
+            // Follow user
+            await User.findByIdAndUpdate(id, { $push: { followers: req.user._id } });
+            await User.findByIdAndUpdate(req.user._id, { $push: { following: id } });
+            res.status(200).json({ message: "User followed successfully" });
+        }
+
     } catch (error) {
-        res.status(500).json({message: error.message});
-        console.log("Error in follow Route", error.message);
+        res.status(500).json({ message: error.message });
+        console.error("Error in follow User Route", error.message);
     }
 }

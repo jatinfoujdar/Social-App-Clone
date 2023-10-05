@@ -1,19 +1,20 @@
 import User from "../schema/userSchema.js";
+import jwt from "jsonwebtoken";
 
 const protectRoute = async(req,res,next)=>{
 
     try {
-        const token = req.cookie.jwt;
-        if(!token){
-            return res.status(401).json({message: "Unauthorized"});   
-        }
-        const decoded = jwt.verify(token,process.env.JWT_SECRET);
+        const token = req.cookies.jwt;
 
-        const user = await User.findById(decoded.userId).select("-password");
+		if (!token) return res.status(401).json({ message: "Unauthorized" });
 
-        req.user = user;
+		const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        next();
+		const user = await User.findById(decoded.userId).select("-password");
+
+		req.user = user;
+
+		next();
         
     } catch (error) {
         res.status(500).json({message: error.message});
