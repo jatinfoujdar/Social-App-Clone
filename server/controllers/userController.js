@@ -81,14 +81,14 @@ export const logoutUser = async(req,res)=>{
 
 export const follower = async (req, res) => {
     try {
-        // Check if req.user is defined and has an _id property
-        if (!req.user || !req.user._id) {
-            return res.status(401).json({ message: "Authentication required" });
-        }
-
         const { id } = req.params;
         const userToModify = await User.findById(id);
         const currentUser = await User.findById(req.user._id);
+
+         // Check if req.user is defined and has an _id property
+        //  if (!req.user || !req.user._id) {
+        //     return res.status(401).json({ message: "Authentication required" });
+        // }
 
         // Check if the user is trying to follow/unfollow themselves
         if (id === req.user._id.toString()) {
