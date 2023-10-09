@@ -121,7 +121,7 @@ export const follower = async(req, res)=> {
 }
 
 export const updateUser = async(req,res)=>{
-
+    console.log(`Received ${req.method} request at ${req.originalUrl}`);
     const { name,email,username,password,profilePic,bio } = req.body;
         const userId = req.user._id;
     try {
@@ -141,10 +141,10 @@ export const updateUser = async(req,res)=>{
         user.bio = bio || user.bio;
 
         user = await user.save()
-        res.status(200).json({message:"Profile updated sucessflly",user})
+        res.status(200).json({message:"Profile updated successflly",user})
 
     } catch (error) {
         res.status(500).json({ message: error.message });
         console.error("Error in Update User Route", error.message);
     }
-} 
+}   
