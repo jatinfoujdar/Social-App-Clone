@@ -129,6 +129,11 @@ export const updateUser = async(req,res)=>{
         if(!user){
             return res.status(400).json({message: "User not found"});
         }
+
+        if(req.params.id !== userId.toString()){
+          return res.status(400).json({message: "You can't update other profile's"})
+        }
+
         if(password){
             const salt = await bcrypt.genSalt(10);
             const hashedPassword = await bcrypt.hash(password,salt);
