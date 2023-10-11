@@ -3,6 +3,7 @@ import Post from "../schema/postSchema.js";
 
 
 
+
 export const createPost = async(req,res)=>{
     try {
         const { postedBy,text,img} = req.body;
@@ -33,4 +34,19 @@ export const createPost = async(req,res)=>{
 		console.log("Error in createPost: ", error.message);
     }
 
+}
+
+export const getPost = async(req,res)=>{
+    try {
+        const post = await Post.findById(req.params.id)
+
+        if(!post){
+            return res.status(404).json({message: "Post not found"})
+        }
+        res.status(200).json({message: "Post found", post})
+
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+		console.log("Error in getPost: ", error.message);
+    }
 }
