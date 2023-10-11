@@ -4,7 +4,7 @@ import generateJWT from "../utils/generateJWT.js";
 import mongoose from "mongoose";
 
 
- export const getUserProfile= async (req, res) => {
+export const getUserProfile= async (req, res) => {
 	const { query } = req.params;
 
 	try {
@@ -19,9 +19,9 @@ import mongoose from "mongoose";
         } 
 
 		res.status(200).json(user);
-	} catch (err) {
+	} catch (error) {
 		res.status(500).json({ error: err.message });
-		console.log("Error in getUserProfile: ", err.message);
+		console.log("Error in getUserProfile: ", error.message);
 	}
 };
 
@@ -184,8 +184,7 @@ export const updateUser = async(req,res)=>{
 
 
 
-  // export const getUserProfile = async(req,res)=>{
-
+// export const getUserProfile = async(req,res)=>{
 //   const {username} = req.params;
 //   try {
 //     console.log(`Searching for user with username: ${username}`);
