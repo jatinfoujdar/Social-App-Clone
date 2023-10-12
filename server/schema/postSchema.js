@@ -18,23 +18,25 @@ const postSchema = mongoose.Schema({
         ref: "User",
         default: []
     },
-    replace:[{
-        userId: {
-            type: mongoose.Schema.Types.ObjectId ,
-            required: "User",
-            required: true,
+    replies: [
+        {
+            userId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User",
+                required: true,
+            },
+            text: {
+                type: String,
+                required: true,
+            },
+            userProfilePic: {
+                type: String,
+            },
+            username: {
+                type: String,
+            },
         },
-        text:{
-            type: String,
-            required: true
-        },
-        userProfilePic:{
-            type: String,
-        },
-        username:{
-            type: String,
-        }
-    }]
+    ],
 },{
     timestamps: true
 })
