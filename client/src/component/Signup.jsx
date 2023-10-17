@@ -21,7 +21,17 @@ import { authScreenAtom } from '../atoms/authAtoms'
 
 export default function Signup() {
   const [showPassword, setShowPassword] = useState(false)
-  const setAuthScreen = useSetRecoilState(authScreenAtom)
+  const setAuthScreen = useSetRecoilState(authScreenAtom);
+  
+  
+  
+  const handleSignup = async()=>{
+    try {
+      
+    } catch (error) {
+      console.log("Error in handleSignup: ", error.message);
+    }
+  }
 
   return (
     <Flex
@@ -83,7 +93,9 @@ export default function Signup() {
                 color={'white'}
                 _hover={{
                   bg: 'blue.500',
-                }}>
+                }}
+                onClick={handleSignup()}
+                >
                 Sign up
               </Button>
             </Stack>
