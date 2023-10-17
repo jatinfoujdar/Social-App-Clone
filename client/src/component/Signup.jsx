@@ -22,12 +22,22 @@ import { authScreenAtom } from '../atoms/authAtoms'
 export default function Signup() {
   const [showPassword, setShowPassword] = useState(false)
   const setAuthScreen = useSetRecoilState(authScreenAtom);
-  
+  const [input, setInput] = useState({
+    name: "",
+    username: "",
+    email: "",
+    password: "",
+  })
   
   
   const handleSignup = async()=>{
     try {
-      
+      const res = await fetch("/api/users/signup",{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+      })
     } catch (error) {
       console.log("Error in handleSignup: ", error.message);
     }
@@ -58,24 +68,33 @@ export default function Signup() {
               <Box>
                 <FormControl  isRequired>
                   <FormLabel>Full Name</FormLabel>
-                  <Input type="text" />
+                  <Input type="text" onChange={(e)=> setInput({...input,name: e.target.value})}
+                  value={input.name}
+                  />
                 </FormControl>
               </Box>
               <Box>
                 <FormControl >
                   <FormLabel>User Name</FormLabel>
-                  <Input type="text" />
+                  <Input type="text" onChange={(e)=> setInput({...input,username: e.target.value})}
+                  value={input.username}
+                  />
                 </FormControl>
               </Box>
             </HStack>
             <FormControl isRequired>
               <FormLabel>Email address</FormLabel>
-              <Input type="email" />
+              <Input type="email" onChange={(e)=> setInput({...input,email: e.target.value})}
+                value={input.email} 
+                />
             </FormControl>
             <FormControl  isRequired>
               <FormLabel>Password</FormLabel>
               <InputGroup>
-                <Input type={showPassword ? 'text' : 'password'} />
+                <Input type={showPassword ? 'text' : 'password'} 
+                onChange={(e)=> setInput({...input,password: e.target.value})}
+                value={input.password}
+                />
                 <InputRightElement h={'full'}>
                   <Button
                     variant={'ghost'}
