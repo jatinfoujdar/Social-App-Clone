@@ -6,13 +6,17 @@ import {
   Input,
   Checkbox,
   Stack,
+  Link,
   Button,
   Heading,
   Text,
   useColorModeValue,
 } from '@chakra-ui/react'
+import { useSetRecoilState } from 'recoil'
+import { authScreenAtom } from '../atoms/authAtoms'
 
 export default function Login() {
+  const setAuthScreen = useSetRecoilState(authScreenAtom)
   return (
     <Flex
       minH={'100vh'}
@@ -23,7 +27,7 @@ export default function Login() {
         <Stack align={'center'}>
           <Heading fontSize={'4xl'}>Sign in to your account</Heading>
           <Text fontSize={'lg'} color={'gray.600'}>
-            to enjoy all of our cool <Text color={'blue.400'}>features</Text> ✌️
+            to enjoy all of our cool <Text color={'blue.400'}>features</Text> 
           </Text>
         </Stack>
         <Box
@@ -57,7 +61,13 @@ export default function Login() {
                Login
               </Button>
             </Stack>
-            
+            <Stack align={'center'}>
+            <Text fontSize={'lg'} color={'gray.600'}>
+            Don't have account <Link color={'blue.400'}
+            onClick={()=> setAuthScreen("signup")}
+            >Sign up</Link> 
+          </Text>
+            </Stack>
           </Stack>
         </Box>
       </Stack>
