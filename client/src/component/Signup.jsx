@@ -31,13 +31,17 @@ export default function Signup() {
   
   
   const handleSignup = async()=>{
+
+    console.log(input);
     try {
       const res = await fetch("/api/users/signup",{
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
+        body: JSON.stringify(input)
       })
+      const data = res.json();
     } catch (error) {
       console.log("Error in handleSignup: ", error.message);
     }
@@ -113,7 +117,7 @@ export default function Signup() {
                 _hover={{
                   bg: 'blue.500',
                 }}
-                onClick={handleSignup()}
+                onClick={handleSignup}
                 >
                 Sign up
               </Button>
