@@ -17,6 +17,23 @@ import { authScreenAtom } from '../atoms/authAtoms'
 
 export default function Login() {
   const setAuthScreen = useSetRecoilState(authScreenAtom)
+
+  const handleLogin = async()=>{
+    try {
+      const res = await fetch("/api/users/login",{
+        	method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(input),
+		
+      })
+    } catch (error) {
+      
+    }
+  }
+
+
   return (
     <Flex
       minH={'100vh'}
@@ -57,7 +74,9 @@ export default function Login() {
                 color={'white'}
                 _hover={{
                   bg: 'blue.500',
-                }}>
+                }}
+                onClick={handleLogin}
+                >
                Login
               </Button>
             </Stack>

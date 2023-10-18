@@ -18,34 +18,46 @@ import { useState } from 'react'
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 import { useSetRecoilState } from 'recoil'
 import { authScreenAtom } from '../atoms/authAtoms'
+import useShowToast from '../hooks/useShowToast'
+import { userAtom } from '../atoms/userAtom'
 
 export default function Signup() {
   const [showPassword, setShowPassword] = useState(false)
   const setAuthScreen = useSetRecoilState(authScreenAtom);
+ 
   const [input, setInput] = useState({
     name: "",
     username: "",
     email: "",
     password: "",
   })
-  
-  
-  const handleSignup = async()=>{
+   const showToast = useShowToast();
+   const setUser = useSetRecoilState(userAtom);
 
-    console.log(input);
-    try {
-      const res = await fetch("/api/users/signup",{
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(input)
-      })
-      const data = res.json();
-    } catch (error) {
-      console.log("Error in handleSignup: ", error.message);
-    }
-  }
+  const handleSignup = async () => {
+		try {
+			const res = await fetch("/api/users/signup", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(input),
+			});
+			const data = await res.json();
+
+			if (data.error) {
+				showToast("Error", data.error, "error");
+				return;
+			}
+
+			localStorage.setItem("user-data", JSON.stringify(data));
+			setUser(data);
+		} catch (error) {
+			showToast("Error", error, "error");
+		}
+	};
+
+ 
 
   return (
     <Flex
