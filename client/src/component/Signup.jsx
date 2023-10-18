@@ -56,9 +56,6 @@ export default function Signup() {
 			showToast("Error", error, "error");
 		}
 	};
-
- 
-
   return (
     <Flex
       minH={'100vh'}
