@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import {
     Button,
     Flex,
@@ -17,6 +17,7 @@ import { userAtom } from '../atoms/userAtom'
 
  const UpdateProfilePage =() =>{
     const [user , setUser] = useRecoilState(userAtom)
+    const fileRef = useRef(null);
     const [input, setInput] = useState({
         name: user.name,
         username: user.username,
@@ -47,15 +48,16 @@ import { userAtom } from '../atoms/userAtom'
              
               <Stack direction={['column', 'row']} spacing={6}>
                 <Center>
-                  <Avatar size="xl" src="https://bit.ly/sage-adebayo"/>
+                  <Avatar size="xl" src={user.profilePic}/>
 
                 </Center>
                 <Center w="full">
-                  <Button w="full">Change Avator</Button>
+                  <Button w="full" onClick={()=> fileRef.current.click()}>Change Avator</Button>
+                  <Input type='file' hidden ref={fileRef}/>
                 </Center>
               </Stack>
             </FormControl>
-            
+
             <FormControl  isRequired>
               <FormLabel>Full name</FormLabel>
               <Input
