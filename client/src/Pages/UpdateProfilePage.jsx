@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
     Button,
     Flex,
@@ -11,9 +11,20 @@ import {
     Avatar,
     Center,
   } from '@chakra-ui/react'
+import { useRecoilState } from 'recoil'
+import { userAtom } from '../atoms/userAtom'
   
 
-const UpdateProfilePage = () => { 
+ function UpdateProfilePage() {
+    const [user , setUser] = useRecoilState(userAtom)
+    const [input, setInput] = useState({
+        name: "",
+        username: "",
+        email: "",
+        bio : "",
+        password: ""
+    }) 
+    // console.log(user,"user");
       return (
         <Flex
           minH={'100vh'}
@@ -73,7 +84,7 @@ const UpdateProfilePage = () => {
               <Input
                 placeholder="Bio....!"
                 _placeholder={{ color: 'gray.500' }}
-                type="email"
+                type="text"
               />
             </FormControl>
             

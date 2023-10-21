@@ -56,6 +56,8 @@ export const signupUser = async(req,res)=>{
                 name: newUser.name,
                 email: newUser.email,
                 username: newUser.username,
+                Bio: newUser.bio,
+                profilePic: newUser.profilePic
             })
         }else{
             res.status(400).json({message: "Invalid User Data"})
@@ -83,6 +85,8 @@ export const loginUser =  async(req,res)=>{
             name: user.name,
             email: user.email,
             username: user.username,
+            bio: newUser.bio,
+            profilePic: user.profilePic
         })
         
     } catch (error) {
