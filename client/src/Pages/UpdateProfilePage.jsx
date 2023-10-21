@@ -13,11 +13,15 @@ import {
   } from '@chakra-ui/react'
 import { useRecoilState } from 'recoil'
 import { userAtom } from '../atoms/userAtom'
+import usePreview from '../hooks/usePreview'
   
 
  const UpdateProfilePage =() =>{
     const [user , setUser] = useRecoilState(userAtom)
     const fileRef = useRef(null);
+    const {handleImageChange , imgUrl} = usePreview();
+
+
     const [input, setInput] = useState({
         name: user.name,
         username: user.username,
@@ -48,12 +52,12 @@ import { userAtom } from '../atoms/userAtom'
              
               <Stack direction={['column', 'row']} spacing={6}>
                 <Center>
-                  <Avatar size="xl" src={user.profilePic}/>
+                  <Avatar size="xl" src={imgUrl || user.profilePic}  />
 
                 </Center>
                 <Center w="full">
                   <Button w="full" onClick={()=> fileRef.current.click()}>Change Avator</Button>
-                  <Input type='file' hidden ref={fileRef}/>
+                  <Input type='file' hidden ref={fileRef} onChange={handleImageChange}/>
                 </Center>
               </Stack>
             </FormControl>
