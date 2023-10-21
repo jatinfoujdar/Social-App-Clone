@@ -21,34 +21,32 @@ import { userAtom } from '../atoms/userAtom'
 export default function Login() {
   const setAuthScreen = useSetRecoilState(authScreenAtom)
   const setUser = useSetRecoilState(userAtom)
-  const [input, setInput] = useState({
-    name: "",
+  const [input, setInput] = useState({  
     username: "",
-    email: "",
     password: "",
   })
   const showToast = useShowToast();
-  const handleLogin = async()=>{
+  const handleLogin = async () => {
     try {
-      const res = await fetch("/api/users/login",{
-        	method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(input),
-      })
+      const res = await fetch("/api/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(input),
+      });
       const data = await res.json();
-      // console.log(data);
-      if(data.error){
-        showToast("Error",error,"error");
+      if (data.error) {
+        showToast("Error", data.error, "error");
         return;
       }
-      localStorage.setItem("user-data",JSON.stringify(data));
-      setUser(data)
+      localStorage.setItem("user-data", JSON.stringify(data));
+      setUser(data);
     } catch (error) {
-      showToast("Error",error,"error")
+      showToast("Error", error.message, "error");
     }
-  }
+  };
+  
   return (
     <Flex
       minH={'100vh'}
@@ -68,13 +66,13 @@ export default function Login() {
           boxShadow={'lg'}
           p={8}>
           <Stack spacing={4}>
-            <FormControl id="email">
+            <FormControl isRequired>
               <FormLabel>User Name</FormLabel>
                   <Input type="text" value={input.username}
                   onChange={(e)=> setInput((input)=>({...input,username: e.target.value}))}
                 />
             </FormControl>
-            <FormControl id="password">
+            <FormControl isRequired>
               <FormLabel>Password</FormLabel>
               <Input type="password" value={input.password}
                   onChange={(e)=> setInput((input)=>({...input,password: e.target.value}))}

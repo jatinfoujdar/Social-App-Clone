@@ -56,8 +56,8 @@ export const signupUser = async(req,res)=>{
                 name: newUser.name,
                 email: newUser.email,
                 username: newUser.username,
-                Bio: newUser.bio,
-                profilePic: newUser.profilePic
+                bio: newUser.bio,
+                profilePic: newUser.profilePic,
             })
         }else{
             res.status(400).json({message: "Invalid User Data"})
@@ -77,7 +77,7 @@ export const loginUser =  async(req,res)=>{
         const isPasswordCorrect = await bcrypt.compare(password,user?.password || "");
 
         if(!user || !isPasswordCorrect){
-            return res.status(400).json({message: "Invaild Username and Password"});
+            return res.status(400).json({message: "Invaild User and Password"});
         }
         generateJWT(user._id,res);
         res.status(200).json({
@@ -85,7 +85,7 @@ export const loginUser =  async(req,res)=>{
             name: user.name,
             email: user.email,
             username: user.username,
-            bio: newUser.bio,
+            bio: user.bio,
             profilePic: user.profilePic
         })
         

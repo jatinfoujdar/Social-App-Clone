@@ -15,16 +15,16 @@ import { useRecoilState } from 'recoil'
 import { userAtom } from '../atoms/userAtom'
   
 
- function UpdateProfilePage() {
+ const UpdateProfilePage =() =>{
     const [user , setUser] = useRecoilState(userAtom)
     const [input, setInput] = useState({
-        name: "",
-        username: "",
-        email: "",
-        bio : "",
+        name: user.name,
+        username: user.username,
+        email: user.email,
+        bio : user.bio,
         password: ""
     }) 
-    // console.log(user,"user");
+    console.log(user,"user");
       return (
         <Flex
           minH={'100vh'}
@@ -55,47 +55,67 @@ import { userAtom } from '../atoms/userAtom'
                 </Center>
               </Stack>
             </FormControl>
+            
             <FormControl  isRequired>
               <FormLabel>Full name</FormLabel>
               <Input
                 placeholder="Posty"
+                value={input.name}
+                onChange={(e)=> setInput((input)=>({...input,name: e.target.value}))}
                 _placeholder={{ color: 'gray.500' }}
                 type="text"
               />
             </FormControl>
+
+
             <FormControl  isRequired>
               <FormLabel>User name</FormLabel>
               <Input
                 placeholder="Jatin foujdar"
+                value={input.username}
+                onChange={(e)=> setInput((input)=>({...input,username: e.target.value}))}
                 _placeholder={{ color: 'gray.500' }}
                 type="text"
               />
             </FormControl>
+
+
             <FormControl  isRequired>
               <FormLabel>Email address</FormLabel>
               <Input
                 placeholder="your-email@example.com"
+                value={input.email}
+                  onChange={(e)=> setInput((input)=>({...input,email: e.target.value}))}
                 _placeholder={{ color: 'gray.500' }}
                 type="email"
               />
             </FormControl>
+
+
             <FormControl  isRequired>
               <FormLabel>Bio </FormLabel>
               <Input
                 placeholder="Bio....!"
+                value={input.bio}
+                  onChange={(e)=> setInput((input)=>({...input,bio: e.target.value}))}
                 _placeholder={{ color: 'gray.500' }}
                 type="text"
               />
             </FormControl>
             
+
             <FormControl  isRequired>
               <FormLabel>Password</FormLabel>
               <Input
                 placeholder="password"
+                value={input.password}
+                onChange={(e)=> setInput((input)=>({...input,password: e.target.value}))}
                 _placeholder={{ color: 'gray.500' }}
                 type="password"
               />
             </FormControl>
+
+
             <Stack spacing={6} direction={['column', 'row']}>
               <Button
                 bg={'red.400'}
