@@ -2,6 +2,7 @@ import User from "../schema/userSchema.js";
 import bcrypt from "bcryptjs";
 import generateJWT from "../utils/generateJWT.js";
 import mongoose from "mongoose";
+import { v2 as cloudinary } from "cloudinary";
 
 
 export const getUserProfile= async (req, res) => {
@@ -150,7 +151,8 @@ export const follower = async(req, res)=> {
 
 export const updateUser = async(req,res)=>{
     console.log(`Received ${req.method} request at ${req.originalUrl}`);
-    const { name,email,username,password,profilePic,bio } = req.body;
+    const { name,email,username,password,bio } = req.body;
+    let{profilePic} = req.body;
         const userId = req.user._id;
     try {
         let user = await User.findById(userId);
@@ -167,6 +169,12 @@ export const updateUser = async(req,res)=>{
             const hashedPassword = await bcrypt.hash(password,salt);
             user.password = hashedPassword;
         }
+
+        if(profilePic){
+            const uploadResponse = await cloudinary.uploader.upload(profilePic);
+            profilePic = uploadResponse.secure_url;
+        }
+
         user.name = name || user.name;
         user.email = email || user.email; 
         user.username = username || user.username;
