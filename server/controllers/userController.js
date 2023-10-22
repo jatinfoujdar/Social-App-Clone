@@ -199,19 +199,3 @@ export const updateUser = async(req,res)=>{
 
 
 
-// export const getUserProfile = async(req,res)=>{
-//   const {username} = req.params;
-//   try {
-//     console.log(`Searching for user with username: ${username}`);
-//      const user = await User.findOne({ username }).select("-password").select("-updatedAt");
-//      if (!user) {
-//      console.log(`User not found for username: ${username}`);
-//      return res.status(400).json({ message: "User not Found" });
-//     }
-//      res.status(200).json(user)
-
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//     console.error("Error in getUserProfile User Route", error.message);
-//   }
-// }

@@ -4,7 +4,7 @@ import { connectDB } from "./database/db.js";
 import cookieParser from "cookie-parser";
 import userRoutes from "./routes/userRoutes.js"
 import postRoutes from "./routes/postRoutes.js"
-import {V2 as cloudinary} from "cloudinary";
+import {v2 as cloudinary} from "cloudinary";
 
 dotenv.config();
 connectDB();

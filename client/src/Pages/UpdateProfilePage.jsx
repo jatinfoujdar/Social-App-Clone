@@ -14,13 +14,38 @@ import {
 import { useRecoilState } from 'recoil'
 import { userAtom } from '../atoms/userAtom'
 import usePreview from '../hooks/usePreview'
+import useShowToast from '../hooks/useShowToast'
   
 
  const UpdateProfilePage =() =>{
     const [user , setUser] = useRecoilState(userAtom)
     const fileRef = useRef(null);
-    const {handleImageChange , imgUrl} = usePreview();
+    const showToast = useShowToast();
 
+    const {handleImageChange , imgUrl} = usePreview();
+  
+    const handleSubmit = async(e)=>{
+      e.preventDefault();
+      try {
+        const res = await fetch(`/api/users/update/${user._id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ...input, profilePic: imgUrl }),
+        });
+        const data = await res.json(); // updated user object
+        if (data.error) {
+          showToast("Error", data.error, "error");
+          return;
+        }
+        showToast("Success", "Profile updated successfully", "success");
+        setUser(data);
+        localStorage.setItem("user-data", JSON.stringify(data));
+      } catch (error) {
+        showToast("Error",error.message,"error")
+      }
+    }
 
     const [input, setInput] = useState({
         name: user.name,
@@ -29,8 +54,11 @@ import usePreview from '../hooks/usePreview'
         bio : user.bio,
         password: ""
     }) 
-    console.log(user,"user");
+    // console.log(user,"user");
+    
+   
       return (
+        <form onSubmit={handleSubmit}>
         <Flex
           minH={'100vh'}
           align={'center'}
@@ -62,7 +90,7 @@ import usePreview from '../hooks/usePreview'
               </Stack>
             </FormControl>
 
-            <FormControl  isRequired>
+            <FormControl  >
               <FormLabel>Full name</FormLabel>
               <Input
                 placeholder="Posty"
@@ -74,7 +102,7 @@ import usePreview from '../hooks/usePreview'
             </FormControl>
 
 
-            <FormControl  isRequired>
+            <FormControl  log>
               <FormLabel>User name</FormLabel>
               <Input
                 placeholder="Jatin foujdar"
@@ -86,7 +114,7 @@ import usePreview from '../hooks/usePreview'
             </FormControl>
 
 
-            <FormControl  isRequired>
+            <FormControl  log>
               <FormLabel>Email address</FormLabel>
               <Input
                 placeholder="your-email@example.com"
@@ -98,7 +126,7 @@ import usePreview from '../hooks/usePreview'
             </FormControl>
 
 
-            <FormControl  isRequired>
+            <FormControl  log>
               <FormLabel>Bio </FormLabel>
               <Input
                 placeholder="Bio....!"
@@ -110,7 +138,7 @@ import usePreview from '../hooks/usePreview'
             </FormControl>
             
 
-            <FormControl  isRequired>
+            <FormControl  log>
               <FormLabel>Password</FormLabel>
               <Input
                 placeholder="password"
@@ -138,14 +166,16 @@ import usePreview from '../hooks/usePreview'
                 w="full"
                 _hover={{
                   bg: 'blue.500',
-                }}>
+                }}type='submit' >
                 Submit
               </Button>
             </Stack>
           </Stack>
         </Flex>
+        </form>
       )
     }
+    
     
  
 
