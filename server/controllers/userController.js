@@ -149,49 +149,56 @@ export const follower = async(req, res)=> {
     }
 }
 
-export const updateUser = async(req,res)=>{
-    
-    const { name,email,username,password,bio } = req.body;
-    let {profilePic} = req.body;
-        const userId = req.user._id;
+export const updateUser = async (req, res) => {
+    const { name, email, username, password, bio } = req.body;
+    let { profilePic } = req.body;
+    const userId = req.user._id;
+  
     try {
-        let user = await User.findById(userId);
-        if(!user){
-            return res.status(400).json({message: "User not found"});
+      // Find the user by ID
+      const user = await User.findById(userId);
+  
+      if (!user) {
+        return res.status(400).json({ message: "User not found" });
+      }
+  
+      if (req.params.id !== userId.toString()) {
+        return res.status(400).json({ message: "You can't update other profiles" });
+      }
+  
+      if (password) {
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+        user.password = hashedPassword;
+      }
+  
+      if (profilePic) {
+        if (user.profilePic) {
+          // Delete the existing profile picture on cloudinary
+          const publicId = user.profilePic.split("/").pop().split(".")[0];
+          await cloudinary.uploader.destroy(publicId);
         }
-
-        if(req.params.id !== userId.toString()){
-          return res.status(400).json({message: "You can't update other profile's"})
-        }
-
-        if(password){
-            const salt = await bcrypt.genSalt(10);
-            const hashedPassword = await bcrypt.hash(password,salt);
-            user.password = hashedPassword;
-        }
-
-        if(profilePic){
-            if(user.profilePic){
-                await cloudinary.uploader.destroy(user.profilePic.split("/".pop().split(".")[0]));
-            }
-            const uploadResponse = await cloudinary.uploader.upload(profilePic);
-            profilePic = uploadResponse.secure_url;
-        }
-
-        user.name = name || user.name;
-        user.email = email || user.email; 
-        user.username = username || user.username;
-        user.profilePic = profilePic || user.profilePic;
-        user.bio = bio || user.bio;
-
-        user = await user.save()
-        res.status(200).json({message:"Profile updated successflly",user})
-
+        // Upload the new profile picture to cloudinary
+        const uploadResponse = await cloudinary.uploader.upload(profilePic);
+        profilePic = uploadResponse.secure_url;
+      }
+  
+      // Update user data
+      user.name = name || user.name;
+      user.email = email || user.email;
+      user.username = username || user.username;
+      user.profilePic = profilePic || user.profilePic;
+      user.bio = bio || user.bio;
+  
+      // Save the updated user
+      await user.save();
+  
+      return res.status(200).json({ message: "Profile updated successfully", user });
     } catch (error) {
-        res.status(500).json({ message: error.message });
-        console.error("Error in Update User Route", error.message);
+      console.error("Error in Update User Route:", error);
+      return res.status(500).json({ message: "Internal server error" });
     }
-}   
+  }; 
 
 
 
