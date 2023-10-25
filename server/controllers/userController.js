@@ -150,9 +150,9 @@ export const follower = async(req, res)=> {
 }
 
 export const updateUser = async(req,res)=>{
-    console.log(`Received ${req.method} request at ${req.originalUrl}`);
+    
     const { name,email,username,password,bio } = req.body;
-    let{profilePic} = req.body;
+    let {profilePic} = req.body;
         const userId = req.user._id;
     try {
         let user = await User.findById(userId);
