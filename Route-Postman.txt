@@ -1,0 +1,43 @@
+Route-Postman
+
+Signup:
+
+POST: http://localhost:3000/api/users/signup
+{
+    "username": "",
+    "name": "",
+    "email": "",
+    "password": ""
+}
+
+LOGIN:
+
+POST: http://localhost:3000/api/users/login
+{
+    "username": "jatin456",
+    "password": "12344321"
+}
+
+LOGOUT:
+
+POST: http://localhost:3000/api/users/logout
+
+
+FOLLOW USER:
+
+POST: http://localhost:3000/api/users/follow/'(other user id)'
+
+UPDATE:
+
+PUT: http://localhost:3000/api/users/update/'(own user id)'
+
+{
+    "username": "",
+    "name": "",
+    "email": "",
+    "password": ""
+}
+
+PROFILE VIEW:
+
+GET: http://localhost:3000/api/users/profile/'(other user id)'
