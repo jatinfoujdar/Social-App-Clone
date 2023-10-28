@@ -27,6 +27,10 @@ const UserPage = () => {
     getUser();
   },[username,showToast]);
 
+  if(!user){
+    return null;
+  }
+
   return (
     <>
     <UserHeader user={user}/>

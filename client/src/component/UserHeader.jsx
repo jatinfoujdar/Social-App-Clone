@@ -5,7 +5,8 @@ import { useToast } from '@chakra-ui/react'
 import {BsInstagram } from "react-icons/bs"
 import { CiCircleMore} from "react-icons/ci"
 
-const UserHeader = () => {
+
+const UserHeader = ({user}) => {
     const toast = useToast()
 
     const copyUrl =()=>{
@@ -21,20 +22,25 @@ const UserHeader = () => {
     <VStack gap={4} alignItems={"start"}>
         <Flex justifyContent={"space-between"} w={"full"}>
             <Box>
-                <Text fontSize={"2xl"} fontWeight={"bold"}>Jatin Foujdar</Text>
+                <Text fontSize={"2xl"} fontWeight={"bold"}>{user.name}</Text>
                 <Flex gap={2} alignItems={"center"}>
-                <Text fontSize={"sm"}>jatinfoujdar</Text>
+                <Text fontSize={"sm"}>{user.username}</Text>
                 <Text fontSize={"sm"} bg={"gray.dark"} color={"gray.light"} p={1} borderRadius={"full"} >threads.next</Text>
             </Flex>
             </Box>
             <Box>
-                <Avatar name='Jatin Foujdar' scr= "/zuck-avatar.png" size={"xl"} />
+                {user.profilePic && (
+                    <Avatar name={user.name} scr= {user.profilePic} size={"xl"} /> 
+                )}
+                 {!user.profilePic && (
+                    <Avatar name={user.name} scr= "/zuck-avatar.png" size={"xl"} /> 
+                )}
             </Box>
         </Flex>
-        <Text>I'm a learner and always Ravenous for new Skills !</Text>
+        <Text>{user.bio}</Text>
         <Flex w={"full"} justifyContent={"space-between"}>
             <Flex gap={2} alignItems={"center"}>
-                <Text color={"gray.light"}>3.2k followers</Text>
+                <Text color={"gray.light"}>{user.followers.length}</Text>
                 <Box w={"1"} h={"1"} bg={"gray.light"} borderRadius={"full"}></Box>
                 <Link color={'gray.light'}>instagram.com</Link>
             </Flex>
