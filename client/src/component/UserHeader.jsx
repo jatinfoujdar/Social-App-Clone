@@ -1,13 +1,16 @@
-import { Avatar, Box, Flex, VStack,Text ,Menu, MenuButton, Portal, MenuList, MenuItem} from '@chakra-ui/react'
+import { Avatar, Box, Flex, VStack,Text ,Menu, MenuButton, Portal, MenuList, MenuItem, Button} from '@chakra-ui/react'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link  } from 'react-router-dom'
 import { useToast } from '@chakra-ui/react'
 import {BsInstagram } from "react-icons/bs"
 import { CiCircleMore} from "react-icons/ci"
+import { useRecoilValue } from 'recoil'
+import { userAtom } from '../atoms/userAtom'
 
 
 const UserHeader = ({user}) => {
     const toast = useToast()
+    const currentUser = useRecoilValue(userAtom);
 
     const copyUrl =()=>{
         const currentURL = window.location.href;
@@ -38,6 +41,21 @@ const UserHeader = ({user}) => {
             </Box>
         </Flex>
         <Text>{user.bio}</Text>
+
+        {currentUser._id === user._id && (
+    <Link to="/update">
+        <Button size={"sm"}>
+            Update Profile
+        </Button>
+    </Link>
+)}
+       {currentUser._id !== user._id && (
+        <Button size={"sm"}>
+            Follow
+        </Button>
+)}
+
+
         <Flex w={"full"} justifyContent={"space-between"}>
             <Flex gap={2} alignItems={"center"}>
                 <Text color={"gray.light"}>{user.followers.length}</Text>
