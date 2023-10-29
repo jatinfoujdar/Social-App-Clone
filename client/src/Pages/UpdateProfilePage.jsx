@@ -15,6 +15,7 @@ import { useRecoilState } from 'recoil'
 import { userAtom } from '../atoms/userAtom'
 import usePreview from '../hooks/usePreview'
 import useShowToast from '../hooks/useShowToast'
+
   
 
  const UpdateProfilePage =() =>{
@@ -158,7 +159,7 @@ import useShowToast from '../hooks/useShowToast'
                 _hover={{
                   bg: 'red.500',
                 }}>
-                Cancel
+                     Cancel
               </Button>
               <Button
                 bg={'blue.400'}
