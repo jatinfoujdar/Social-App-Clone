@@ -21,12 +21,17 @@ import useShowToast from '../hooks/useShowToast'
  const UpdateProfilePage =() =>{
     const [user , setUser] = useRecoilState(userAtom)
     const fileRef = useRef(null);
+    const[updating,setUpdating] = useState(false)
     const showToast = useShowToast();
 
     const {handleImageChange , imgUrl} = usePreview();
-  
+    
     const handleSubmit = async(e)=>{
       e.preventDefault();
+      if(updating){
+        return;
+      }
+      setUpdating(true);
       try {
         const res = await fetch(`/api/users/update/${user._id}`, {
           method: "PUT",
@@ -45,6 +50,8 @@ import useShowToast from '../hooks/useShowToast'
         localStorage.setItem("user-data", JSON.stringify(data));
       } catch (error) {
         showToast("Error",error.message,"error")
+      }finally{
+        setUpdating(false)
       }
     }
 
@@ -167,7 +174,7 @@ import useShowToast from '../hooks/useShowToast'
                 w="full"
                 _hover={{
                   bg: 'blue.500',
-                }}type='submit' >
+                }}type='submit' isLoading={updating} >
                 Submit
               </Button>
             </Stack>
