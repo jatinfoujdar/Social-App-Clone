@@ -9,6 +9,7 @@ import { useRecoilValue } from "recoil";
 import { userAtom } from "./atoms/userAtom";
 import Logout from "./component/Logout";
 import UpdateProfilePage from "./Pages/UpdateProfilePage";
+import CreatePost from "./component/CreatePost";
 
 function App(){
 
@@ -29,6 +30,7 @@ function App(){
  <Route path= "/:username/post/:pid" element={<PostPage/>} />
 </Routes>
 {user && <Logout/>}
+{user && <CreatePost/>}
  </Container>
  
   )
