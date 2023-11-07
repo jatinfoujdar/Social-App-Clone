@@ -22,16 +22,32 @@ import {
 import React, { useRef, useState } from 'react'
 import usePreview from "../hooks/usePreview";
 
+
+
+const MAX_CHAR = 500;
+
 const CreatePost = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const {PostText,setPostText} = useState("")
-    const{handleImageChange,imgUrl,setImgUrl} = usePreview();
-    const imageRef = useRef(null)
+    const {handleImageChange,imgUrl,setImgUrl} = usePreview();
+    const imageRef = useRef(null);
+    const [remainingChar, setRemainingChar] = useState(MAX_CHAR);
 
 
-    handleTextChange=()=>{
-     
+    handleTextChange=(e)=>{
+      const inputText = e.target.value;
+        
+      if(inputText > MAX_CHAR){
+        const truncatedText = inputText.slice(0, MAX_CHAR);
+        setPostText(truncatedText);
+        setRemainingChar(0);
+      }else{
+        setPostText(inputText);
+        setRemainingChar(MAX_CHAR - inputText.length);
+      }
     }
+
+    handleCreatePost= async()=>{}
     
   return (
     <>
@@ -49,7 +65,7 @@ const CreatePost = () => {
           <FormControl>
             <Textarea placeholder={"What's on your Mind...."} onChange={handleTextChange} value={PostText}/>
             <Text fontSize={"sm"} fontWeight={"bold"} textAlign={"right"} m={1} color={"gray.800"}>
-                500/500
+                {remainingChar}/{MAX_CHAR}
             </Text>
             <Input type="file" hidden ref={imageRef} onChange={handleImageChange}/>
             <BsFillImageFill  
@@ -67,8 +83,8 @@ const CreatePost = () => {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={onClose}>
-              Close
+            <Button colorScheme='blue' mr={3} onClick={handleCreatePost}>
+             Post
             </Button>
           </ModalFooter>
         </ModalContent>
