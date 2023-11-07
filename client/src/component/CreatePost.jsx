@@ -1,4 +1,4 @@
-import { AddIcon } from "@chakra-ui/icons";
+import { AddIcon , BsFillImageFill} from "@chakra-ui/icons";
 import {
 	Button,
 	CloseButton,
@@ -19,13 +19,14 @@ import {
 	useDisclosure,
 } from "@chakra-ui/react";
 
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import usePreview from "../hooks/usePreview";
 
 const CreatePost = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const {PostText,setPostText} = useState("")
-    const{handleImageChange,imgUrl} = usePreview();
+    const{handleImageChange,imgUrl,setImgUrl} = usePreview();
+    const imageRef = useRef(null)
 
 
     handleTextChange=()=>{
@@ -50,8 +51,19 @@ const CreatePost = () => {
             <Text fontSize={"sm"} fontWeight={"bold"} textAlign={"right"} m={1} color={"gray.800"}>
                 500/500
             </Text>
-            <Input type="file" hidden ref={fileRef} onChange={handleImageChange}/>
+            <Input type="file" hidden ref={imageRef} onChange={handleImageChange}/>
+            <BsFillImageFill  
+            style={{marginLeft:"5px", cursor: "pointer"}} size={16} onClick={()=> imageRef.current.click()}
+            />
           </FormControl>
+           {imgUrl && (
+            <Flex mt={5} w={"full"} position={"relative"}>
+             <Image src={imgUrl} alt="Select img"/>
+             <CloseButton onClick={()=>{setImgUrl("")}} bg={"gray.800"} position={"absolute"} top={2} right={2} />
+            </Flex>
+           )}
+
+
           </ModalBody>
 
           <ModalFooter>

@@ -22,7 +22,7 @@ const usePreview = () => {
     }
     // console.log(imgUrl);
   return {
-     handleImageChange, imgUrl
+     handleImageChange, imgUrl , setImgUrl
   }
 }
 
