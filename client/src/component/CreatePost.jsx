@@ -21,6 +21,8 @@ import {
 
 import React, { useRef, useState } from 'react'
 import usePreview from "../hooks/usePreview";
+import { userAtom } from "../atoms/userAtom";
+import useShowToast from "../hooks/useShowToast";
 
 
 
@@ -32,12 +34,13 @@ const CreatePost = () => {
     const {handleImageChange,imgUrl,setImgUrl} = usePreview();
     const imageRef = useRef(null);
     const [remainingChar, setRemainingChar] = useState(MAX_CHAR);
-
+    const user = useRecoilValue(userAtom);
+    const showToast = useShowToast()
 
     handleTextChange=(e)=>{
       const inputText = e.target.value;
         
-      if(inputText > MAX_CHAR){
+      if(inputText.length > MAX_CHAR){
         const truncatedText = inputText.slice(0, MAX_CHAR);
         setPostText(truncatedText);
         setRemainingChar(0);
@@ -47,7 +50,21 @@ const CreatePost = () => {
       }
     }
 
-    handleCreatePost= async()=>{}
+    handleCreatePost= async()=>{
+      const res = await fetch("/api/posts/create",{
+        method: "POST",
+        headers:{
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({postedBy: user._id,text: PostText,img: imgUrl})
+      })
+      const data = await res.json()
+      if(data.error){
+      showToast("Error",data.error,"error")
+      return
+      }
+      showToast("Success","Post created successfully", "success")
+    }
     
   return (
     <>
