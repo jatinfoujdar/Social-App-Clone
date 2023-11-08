@@ -1,13 +1,14 @@
 import User from "../schema/userSchema.js";
 import Post from "../schema/postSchema.js";
-
+import {V2 as cloudinary} from "cloudinary";
 
 
 
 export const createPost = async(req,res)=>{
     try {
-        const { postedBy,text,img} = req.body;
-
+        const { postedBy,text} = req.body;
+        let {img} = req.body;
+        
         if(!postedBy || !text){
          return res.status(400).json({error:"Please Fill All the fields"})
         }
@@ -19,6 +20,12 @@ export const createPost = async(req,res)=>{
         const maxLength = 500;
         if(text>maxLength){
             return res.status(400).json({error:`Text must be less than ${maxLength} character`})
+        }
+
+        if(img){
+        const uploadResponse = await cloudinary.uploader.upload(img);
+        img = uploadResponse.secure_url
+
         }
 
         const newPost = new Post({postedBy,text,img});

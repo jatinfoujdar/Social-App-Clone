@@ -64,6 +64,7 @@ const CreatePost = () => {
       return
       }
       showToast("Success","Post created successfully", "success")
+      onClose();
     }
     
   return (
