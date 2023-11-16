@@ -3,9 +3,11 @@ import UserHeader from '../component/UserHeader'
 import UserPost from '../component/userPost'
 import { useParams } from 'react-router-dom';
 import useShowToast from '../hooks/useShowToast';
+import { Spinner } from '@chakra-ui/react';
 
 const UserPage = () => {
   const [user,setUser] = useState(null);
+  const [loading,setLoading] = useState(true)
   const {username} = useParams();
   const showToast = useShowToast();
 
@@ -22,12 +24,20 @@ const UserPage = () => {
         setUser(data)
       } catch (error) {
         console.log("Error",error,"error");
+      }finally{
+        setLoading(false);
       }
     }
     getUser();
   },[username,showToast]);
 
-  if(!user){
+  if(!user && loading){
+    return(
+      <Spinner size={xl}/>
+    )
+  }
+
+  if(!user && !loading){
     return null;
   }
 
