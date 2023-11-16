@@ -23,6 +23,7 @@ import React, { useRef, useState } from 'react'
 import usePreview from "../hooks/usePreview";
 import { userAtom } from "../atoms/userAtom";
 import useShowToast from "../hooks/useShowToast";
+const [loading, setLoading] = useState(false);
 
 
 
@@ -51,6 +52,8 @@ const CreatePost = () => {
     }
 
     handleCreatePost= async()=>{
+      setLoading(true)
+     try {
       const res = await fetch("/api/posts/create",{
         method: "POST",
         headers:{
@@ -65,6 +68,11 @@ const CreatePost = () => {
       }
       showToast("Success","Post created successfully", "success")
       onClose();
+     } catch (error) {
+      showToast("Error",error,"error")
+     } finally{
+      setLoading(false)
+     }
     }
     
   return (
@@ -101,7 +109,7 @@ const CreatePost = () => {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={handleCreatePost}>
+            <Button colorScheme='blue' mr={3} onClick={handleCreatePost} isLoading={loading}>
              Post
             </Button>
           </ModalFooter>
